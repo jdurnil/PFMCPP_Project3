@@ -107,8 +107,51 @@ struct CarWash
     you should be able to deduce the return type of those functions based on their usage in Person::run()
     You'll need to insert the Person struct from the video in the space below.
  */
+struct Limb
+{   
+    int stSize;
+    void stepForward();
+    int stepSize();
+};
 
+struct Person 
+{
+    int age;
+    int height;
+    float hairLength;
+    float GPA;
+    unsigned int SATScore;
+    int distanceTraveled;
+    Limb leftFoot, rightFoot;
 
+    void run(bool startWithLeftFoot);
+};
+
+void Person::run(bool startWithLeftFoot)
+{
+   if(startWithLeftFoot)
+   {
+       leftFoot.stepForward();
+       rightFoot.stepForward();
+   }
+   else
+   {
+       rightFoot.stepForward();
+       leftFoot.stepForward();
+   }
+
+    distanceTraveled += rightFoot.stepSize() + leftFoot.stepSize();
+}
+
+void Limb::stepForward()
+{
+    std::cout << "took a step";
+}
+
+int Limb::stepSize()
+{
+    return stSize;
+}
 
 
 
@@ -147,18 +190,13 @@ struct CarWash
 
 struct Student
 {
-   
-//    5 properties:
-//      1) grade std::string
+    std::string name = "Ted";
     std::string grade = "11";
-//      2) gpa float
     float gpa = 3.2f;
-//      3) number of friends int
     int numFriends = 3;
-//      4) favorite class std::string
     std::string favClass = "Math";
-//      5) major std::string
     std::string major = "English";
+
     struct Class
     {
         std::string className = "Calculus";
@@ -171,53 +209,80 @@ struct Student
         void takeClass(std::string className);
         float assignHomework(Student student, std::string className = "English");
     };
-//    3 things it can do:
-//        1) Homework
+
     Class thisClass;
     void doHomework(Class test);
-//        2) Take exams
     void takeExams();
-//        3) disrupt class
     void disruptClass();
-
 };
+
+void Student::doHomework(Class test)
+{
+    std::cout << "Homework is done for class: " << test.className;
+}
+
+void Student::takeExams()
+{
+    std::cout << "zexams are finished!";
+}
+
+void Student::disruptClass(){
+    std::cout << "Student throws a paper ball towards the teacher";
+}
+
+void Student::Class::teachClass(std::string classDistinction){
+    std::cout << classDistinction << " is in session";
+}
+
+void Student::Class::takeClass(std::string classDistinction)
+{
+    std::cout << "Taking class : " << classDistinction; 
+}
+
+float Student::Class::assignHomework(Student student, std::string classDistinction)
+{
+    std::cout << student.name << " has been assigned homework for "<< classDistinction;
+    return 1.0f;
+}
 
 struct Employee
 {
-//.    5 properties:
-//      1) job title std::string
     std::string jobTitle = "Designer";
-//      2) hourly wage float
     float hourlyWage = 3.5f;
-//      3) shift number int
     int shiftNumber = 2;
-//      4) Name std::string
     std::string name = "Ted";
-//      5) Employee Id int
-    int employeeId = 57;
-//    3 things it can do:
-//        1) come to work
-    void comeToWork();
-//        2) work shift
-    void workShift(int shiftNumber);
-//        3) collect pay
-    float collectPay(float hourlyWage);
 
+    int employeeId = 57;
+    void comeToWork();
+    void workShift(int shiftNumber);
+    float collectPay(float hourlyWage);
 };
+
+void Employee::comeToWork()
+{
+    std::cout << "Heading to work for the day";
+}
+
+void Employee::workShift(int shift)
+{
+    std::cout << name << " is starting work on shift number: " << shift;  
+}
+
+float Employee::collectPay(float wage)
+{
+    float pay = 8*wage;
+    std::cout << name << " just got paid.";
+    return pay;
+}
 
 struct Computer
 {
-//    5 properties:
-//      1) Files int
     int files = 10;
-//      2) Directories int
     int directories = 3;
-//      3) hard drive std::string
     std::string hardDrive = "C";
-//      4) ram float
     float ram = 96.2f;
-//      5) cpu float
     float cpu = 16.7f;
+
     struct File
     {
         std::string fileType = "Excel";
@@ -229,157 +294,217 @@ struct Computer
         float loadFile(std::string fileName);
         std::string getFileType(std::string fileName, std::string fileExtension);
     };
-//    3 things it can do:
-//        1) boot an ooperating system
+
     File currentFile;
     void bootComputer();
-//        2) run software
     bool runSofware(std::string type);
-//        3) save files
-    void saveFile(File file);
-    
+    void saveFile(File file);   
 };
+
+void Computer::bootComputer()
+{
+    std::cout << "Computer is booting";
+}
+
+bool Computer::runSofware(std::string type)
+{
+    std::cout << type << " is now running";
+    bool isRunning = true;
+    return isRunning;
+}
+
+void Computer::saveFile(File file)
+{
+    std::cout << file.fileName << " has been saved";
+}
+
+Computer::File Computer::File::getFile(std::string file)
+{
+    std::cout << "retrieving " << file;
+    return *this;
+}
+
+float Computer::File::loadFile(std::string file)
+{
+    std::cout << file << " has been loaded";
+    return 1.0f;
+}
+
+std::string Computer::File::getFileType(std::string file, std::string fileExt)
+{
+    std::cout << "Your file " << file << "." << fileExt << " is a Word document";
+    return "running";
+}
+
 struct Building
 {
-//    5 properties:
-//      1) rooms int
     int rooms = 16;
-//      2) hallways int
-
     int hallways = 8;
-//      3) elevators int
     int elevators = 1;
-//      4) carpet float
     float carpet = 19.3f;
-//      5) ceilings int
     int ceilings = 8;        
-//      3 things it can do:
-//        1) provide a place of business
+
     void providePlaceOfBusiness(std::string businessType);
-//        2) provide a dwelling
     void provideDwelling(int squareFeet);
-//        3) provide space for government work
-    void provideSpaceForGovWork(int squareFeet);
-    
+    void provideSpaceForGovWork(int squareFeet);  
 };
+
+void Building::provideDwelling(int squareFeet)
+{
+    std::cout << "You have " << squareFeet << " squarefeet in which to live";
+}
+
+void Building::providePlaceOfBusiness(std::string businessType)
+{
+    std::cout << "You have now rented space for your " << businessType << " business";
+}
+
+void Building::provideSpaceForGovWork(int squareFeet)
+{
+    std::cout << "You now have " << squareFeet << " squarefeet in which to run your govt offices";
+}
 
 struct Burner
 {
-//.    5 properties:
-//        1) type std::string
     std::string type = "Gas";
-//        2) maxHeatTemp float
     float maxHeatTemp = 320.5f;
-//        3) circumference float
     float circumference = 16.4f;
-//        4) diameter float
     float diameter = 10.2f;
-//        5) drippan int
-    int dripPan = 5;
-//    3 things it can do:
-//        1) broil
-    void broil(std::string foodType);
-//        2) boil
-    void boil(int burnerNumber);
-//        3) fry
-    void fry(int burnerNumber);
+    int number = 1;
 
+    void broil(std::string foodType);
+    void boil(int burnerNumber);
+    void fry(int burnerNumber);
 };
+
+void Burner::boil(int burnerNumber)
+{
+    std::cout << "Now boiling on burner number " << burnerNumber;
+}
+
+void Burner::broil(std::string foodType)
+{
+    std::cout << "Now broiling " << foodType;
+}
+
+void Burner::fry(int burnerNumber)
+{
+    std::cout << "Now frying on burner number " << burnerNumber; 
+}
 
 struct Racks
 {
-//.    5 properties:
-//      1) numRacks int
     int numRacks = 3;
-//      2) material std::string
     std::string material = "Metal";
-//      3) brand std::string
     std::string brand = "Kenmore";
-//      4) maxTemp float
     float maxTemp = 530.4f;
-
     float widthInInches = 20.6f;
-/*        5) i really just cant think of another property         of a stupid oven rack */
-//    3 things it can do:
-//        1) induction cooking
+
     void inductionCooking(int rackNumber);
-//        2) invection cooking
     void invectionCooking(int rackNumber);
-//    3) hold food
     void holdFood(int rackNumber);
     
 };
 
+void Racks::holdFood(int rackNumber)
+{
+    std::cout << "Now holding food on rack number " << rackNumber;    
+}
+
+void Racks::inductionCooking(int rackNumber)
+{
+    std::cout << "Now induction cooking on rack number " << rackNumber;
+}
+
+void Racks::invectionCooking(int rackNumber)
+{
+    std::cout << "Now invection cooking on rack number " << rackNumber;
+}
 
 struct OvenDoor
 {
-//      5 properties:
-//        1)numhandles int
     int numHandles = 2;
-//        2) numWindows int
     int numWindows = 1;
-//        3) brand std::string
     std::string brand = "Kenmore";
-//        4) frameBuildingMaterial std::string
-    std::string frameMaterial = "Metal";
-//        5) insulationType std::string
     std::string insulationType = "None";
-//    3 things it can do:
-//        1) open
-    void open();
-//        2) close
-    void close();
-//        3) hold in heat
-    void holdInHeat();
 
+    void open();
+    void close();
+    void holdInHeat();
 };
+
+void OvenDoor::open()
+{
+    std::cout << "Oven door is now open";
+}
+
+void OvenDoor::close()
+{
+    std::cout << "Oven door is now closed";
+}
+
+void OvenDoor::holdInHeat()
+{
+    std::cout << "Oven door is holding in heat";
+}
 
 struct TemperatureGuage
 {
-//    5 properties:
-//        1) typeofDisplay std::string
     std::string displayType = "digital";
-//        2) temperature float
     float temperature = 200.7f;
-//        3) time float
-    float time = 160.5f;
-//        4) material std::string
     std::string material = "glass";
-//  power std::string (on or off could be bool)
     bool power = true;
-//    3 things it can do:
-//        1) display temperature
-    int displayTemperature();
-//        2) raise temperature
+
+    float displayTemperature();
     void raiseTemperature();
-//        3) lower temperature
-    void lowerTemperature();
-    
+    void lowerTemperature();  
 };
+
+float TemperatureGuage::displayTemperature()
+{
+    std::cout << this->temperature;
+    return this->temperature;
+}
+
+void TemperatureGuage::raiseTemperature()
+{
+    std::cout << "Temperature has been raised by 5 degrees";
+}
+
+void TemperatureGuage::lowerTemperature()
+{
+    std::cout << "Temperature has been lowered by 5 degrees";
+}
 
 struct Timer
 {
-//    5 properties:
-//      1) currentTime float
     float currentTime = 610.6f;
-//      2) type std::string
     std::string type = "digital";
-//      3) material std::string
     std::string material = "glass";
-//      4) brand std::string
     std::string brand = "Kenmore";
-//      5) amountTimeLeft float
-    float secondsRemaining = 234.5f;
-//    3 things it can do:
-//        1) Countdown Timer
-    float countDownTimer(float timeAmount);
-//        2) display current time
-    float displayCurrentTime();
-//     3) can be manually set
-    void setTime(float time);
-    
+    int secondsRemaining = 234;
 
+    float countDownTimer(float timeAmount);
+    float displayCurrentTime();
+    void setTime(float time);
 };
+
+float Timer::countDownTimer(float timeAmount)
+{
+    std::cout << "You have " << timeAmount << "minutes left in the timer";
+    return timeAmount - 1;
+}
+
+float Timer::displayCurrentTime()
+{
+    std::cout << "The current time is " << this->currentTime << " minutes past midnight";
+    return this->currentTime;
+}
+
+void Timer::setTime(float time)
+{
+    std::cout << "You have set the time to " << time << " minutes past midnight";
+}
 
 struct Oven
 {
@@ -388,10 +513,28 @@ struct Oven
     TemperatureGuage tempGuage;
     OvenDoor ovenDoor;
     Racks racks;
-    void turnOnBurner(Burner burner);
-    void setTimer(float time);
-    TemperatureGuage setTemp(int Temp);
+
+    void turnOnBurner();
+    int getTimer();
+    TemperatureGuage setTemp(int temp);
 };
+
+void Oven::turnOnBurner()
+{
+    std::cout << "Burner number " << this->burner.number << " has been turned on";      
+}
+
+int Oven::getTimer()
+{
+    std::cout << this->timer.secondsRemaining << " seconds are remaining";
+    return this->timer.secondsRemaining;
+}
+
+TemperatureGuage Oven::setTemp(int temp)
+{
+    std::cout << "The tem is now set to " << temp;
+    return this->tempGuage;
+}
 
 
 
