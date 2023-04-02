@@ -231,7 +231,7 @@ void Student::disruptClass(){
 }
 
 void Student::Class::teachClass(std::string classDistinction){
-    std::cout << classDistinction<< " is in session";
+    std::cout << classDistinction << " is in session";
 }
 
 void Student::Class::takeClass(std::string classDistinction)
